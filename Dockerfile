@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 ENV TINI_VERSION v0.18.0
-ENV TSDB_VERSION 2.3.1
+ENV TSDB_VERSION 2.4.0
 ENV HBASE_VERSION 1.4.4
 ENV GNUPLOT_VERSION 5.2.4
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
@@ -73,6 +73,8 @@ ADD files/start_opentsdb.sh /opt/bin/
 ADD files/create_tsdb_tables.sh /opt/bin/
 ADD files/start_hbase.sh /opt/bin/
 ADD files/entrypoint.sh /entrypoint.sh
+# To fix bug in opentsdb 2.4.0
+ADD files/create_table.sh /usr/local/share/opentsdb/tools/create_table.sh
 
 # Fix ENV variables in installed scripts
 RUN for i in /opt/bin/start_hbase.sh /opt/bin/start_opentsdb.sh /opt/bin/create_tsdb_tables.sh; \
